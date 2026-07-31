@@ -1,7 +1,7 @@
 public class FizzBuzzDetector {
     private int _wordCount;
     private int _fizzBuzzCount;
-    private List<List<string>> _newSentence;
+    private List<List<string>> _wordsByLines;
     private readonly char[] _symbols = { 
         '.', ',', '!', '?', ';', ':'
     };
@@ -9,7 +9,7 @@ public class FizzBuzzDetector {
     public FizzBuzzDetector() {
         _wordCount = 0;
         _fizzBuzzCount = 0;
-        _newSentence = new List<List<string>>();
+        _wordsByLines = new List<List<string>>();
     }
 
    public FizzBuzzObj getOverlappings(string text) {
@@ -77,18 +77,18 @@ public class FizzBuzzDetector {
                 }
             }
 
-            _newSentence.Add(newLine);
+            _wordsByLines.Add(newLine);
         }
 
-        List<string> finalSentence = new List<string>();
+        List<string> lineSentence = new List<string>();
 
-        foreach (List<string> line in _newSentence) {
+        foreach (List<string> line in _wordsByLines) {
 
-            finalSentence.Add(string.Join(" ", line));
+            lineSentence.Add(string.Join(" ", line));
         }
 
         return new FizzBuzzObj {
-            Sentence = string.Join("\n", finalSentence) + $"\n\ncount: {_fizzBuzzCount}"
+            Sentence = string.Join("\n", lineSentence) + $"\n\ncount: {_fizzBuzzCount}"
         };
     }
 }
