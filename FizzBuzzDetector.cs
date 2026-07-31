@@ -1,7 +1,7 @@
 public class FizzBuzzDetector {
     private int _wordCount;
     private int _fizzBuzzCount;
-    private List<string> _newSentence;
+    private List<List<string>> _newSentence;
     private readonly char[] _symbols = { 
         '.', ',', '!', '?', ';', ':'
     };
@@ -9,70 +9,87 @@ public class FizzBuzzDetector {
     public FizzBuzzDetector() {
         _wordCount = 0;
         _fizzBuzzCount = 0;
-        _newSentence = new List<string>();
+        _newSentence = new List<List<string>>();
     }
 
-   public void getOverlappings(string text) {
-        string[] words = text.Split(" ");
+   public FizzBuzzObj getOverlappings(string text) {
+        string[] lines = text.Split("\n");
 
         if (text == null) {
 
             Console.WriteLine("The input text is null.");
-            return;
+            return new FizzBuzzObj();
         }
 
         if (text.Length < 7 || text.Length > 100) {
 
             Console.WriteLine("The input text must be between 7 and 100 characters.");
-            return;
+            return new FizzBuzzObj();
         }
 
         if (!text.Any(char.IsLetterOrDigit)) {
 
             Console.WriteLine("Input text does not contain any letters or digits.");
-            return;
+            return new FizzBuzzObj();
         }
 
-        foreach (string word in words) {
-            string originalString = word;
-            string substring = "";
+        foreach (string line in lines) {
 
-            while (originalString.Any(c => _symbols.Contains(c))) {
+            List<string> newLine = new List<string>();
+            string[] words = line.Split(
+                " "
+                , StringSplitOptions.RemoveEmptyEntries
+            );
+        
+            foreach (string word in words) {
 
-                substring = originalString[originalString.Length - 1] + substring;
-                originalString = originalString.Substring(0, originalString.Length - 1);
+                string originalString = word;
+                string substring = "";
+
+                while (originalString.Any(c => _symbols.Contains(c))) {
+
+                    substring = originalString[originalString.Length - 1] + substring;
+                    originalString = originalString.Substring(0, originalString.Length - 1);
+                }
+
+                if (word.All(c => !char.IsLetterOrDigit(c))) {
+
+                    newLine.Add(word);
+                    continue;
+                }
+                _wordCount++;
+
+                if (_wordCount % 15 == 0) {
+
+                    newLine.Add("FizzBuzz" + substring);
+                    _fizzBuzzCount++;
+                } else if (_wordCount % 3 == 0) {
+
+                    newLine.Add("Fizz" + substring);
+                    _fizzBuzzCount++;
+                } else if (_wordCount % 5 == 0) {
+
+                    newLine.Add("Buzz" + substring);
+                    _fizzBuzzCount++;
+                } else {
+
+                    newLine.Add(word + substring);
+                }
             }
 
-            if (word.All(c => !char.IsLetterOrDigit(c))) {
-
-                _newSentence.Add(word);
-                continue;
-            }
-            _wordCount++;
-
-            if (_wordCount % 15 == 0) {
-
-                _newSentence.Add("FizzBuzz" + substring);
-                _fizzBuzzCount++;
-            } else if (_wordCount % 3 == 0) {
-
-                _newSentence.Add("Fizz" + substring);
-                _fizzBuzzCount++;
-            } else if (_wordCount % 5 == 0) {
-
-                _newSentence.Add("Buzz" + substring);
-                _fizzBuzzCount++;
-            } else {
-
-                _newSentence.Add(word + substring);
-            }
+            _newSentence.Add(newLine);
         }
 
-        foreach (string word in _newSentence) {
+        List<string> finalSentence = new List<string>();
 
-            Console.Write(word + " ");
+        foreach (List<string> line in _newSentence) {
+
+            finalSentence.Add(string.Join(" ", line));
         }
 
-        Console.WriteLine("\n\ncount: " + _fizzBuzzCount);
+        return new FizzBuzzObj {
+            Sentence = string.Join("\n", finalSentence),
+            FizzBuzzCount = _fizzBuzzCount
+        };
     }
 }
