@@ -33,17 +33,15 @@ public class FizzBuzzDetector {
             return;
         }
 
-
         foreach (string word in words) {
             string originalString = word;
             string substring = "";
 
             while (originalString.Any(c => _symbols.Contains(c))) {
-                
+
                 substring = originalString[originalString.Length - 1] + substring;
                 originalString = originalString.Substring(0, originalString.Length - 1);
             }
-
 
             if (word.All(c => !char.IsLetterOrDigit(c))) {
 
@@ -68,7 +66,6 @@ public class FizzBuzzDetector {
 
                 _newSentence.Add(word + substring);
             }
-
         }
 
         foreach (string word in _newSentence) {
