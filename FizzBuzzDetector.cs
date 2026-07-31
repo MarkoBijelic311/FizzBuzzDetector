@@ -2,6 +2,9 @@ public class FizzBuzzDetector {
     private int _wordCount;
     private int _fizzBuzzCount;
     private List<string> _newSentence;
+    private readonly char[] _symbols = { 
+        '.', ',', '!', '?', ';', ':'
+    };
 
     public FizzBuzzDetector() {
         _wordCount = 0;
@@ -32,8 +35,18 @@ public class FizzBuzzDetector {
 
 
         foreach (string word in words) {
-            
+            string originalString = word;
+            string substring = "";
+
+            while (originalString.Any(c => _symbols.Contains(c))) {
+                
+                substring = originalString[originalString.Length - 1] + substring;
+                originalString = originalString.Substring(0, originalString.Length - 1);
+            }
+
+
             if (word.All(c => !char.IsLetterOrDigit(c))) {
+
                 _newSentence.Add(word);
                 continue;
             }
@@ -41,19 +54,19 @@ public class FizzBuzzDetector {
 
             if (_wordCount % 15 == 0) {
 
-                _newSentence.Add("FizzBuzz");
+                _newSentence.Add("FizzBuzz" + substring);
                 _fizzBuzzCount++;
             } else if (_wordCount % 3 == 0) {
 
-                _newSentence.Add("Fizz");
+                _newSentence.Add("Fizz" + substring);
                 _fizzBuzzCount++;
             } else if (_wordCount % 5 == 0) {
 
-                _newSentence.Add("Buzz");
+                _newSentence.Add("Buzz" + substring);
                 _fizzBuzzCount++;
             } else {
 
-                _newSentence.Add(word);
+                _newSentence.Add(word + substring);
             }
 
         }
