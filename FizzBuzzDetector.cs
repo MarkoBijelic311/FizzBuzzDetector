@@ -1,25 +1,20 @@
 public class FizzBuzzDetector {
-    private int _wordCount;
-    private int _fizzBuzzCount;
-    private List<List<string>> _wordsByLines;
     private readonly char[] _symbols = { 
         '.', ',', '!', '?', ';', ':'
     };
 
-    public FizzBuzzDetector() {
-        _wordCount = 0;
-        _fizzBuzzCount = 0;
-        _wordsByLines = new List<List<string>>();
-    }
-
    public FizzBuzzObj getOverlappings(string text) {
-        string[] lines = text.Split("\n");
+        int _wordCount = 0;
+        int _fizzBuzzCount = 0;
+        List<List<string>> _wordsByLines = new List<List<string>>();
 
         if (text == null) {
 
             Console.WriteLine("The input text is null.");
             return new FizzBuzzObj();
         }
+
+        string[] lines = text.Split("\n");
 
         if (text.Length < 7 || text.Length > 100) {
 
@@ -73,7 +68,7 @@ public class FizzBuzzDetector {
                     _fizzBuzzCount++;
                 } else {
 
-                    newLine.Add(word + substring);
+                    newLine.Add(originalString + substring);
                 }
             }
 
