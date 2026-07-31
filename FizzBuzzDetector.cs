@@ -88,8 +88,7 @@ public class FizzBuzzDetector {
         }
 
         return new FizzBuzzObj {
-            Sentence = string.Join("\n", finalSentence),
-            FizzBuzzCount = _fizzBuzzCount
+            Sentence = string.Join("\n", finalSentence) + $"\n\ncount: {_fizzBuzzCount}"
         };
     }
 }
