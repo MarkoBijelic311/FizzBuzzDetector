@@ -1,6 +1,6 @@
 ﻿namespace FizzBuzz.Test;
 
-public class UnitTest1
+public class FizzBuzzTest
 {
     [Fact]
     public void Test1()
