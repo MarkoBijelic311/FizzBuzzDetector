@@ -1,4 +1,3 @@
-# FizzBuzzDetector
 # FizzBuzz Detector
 
 ## Overview
